@@ -20,7 +20,7 @@ $ docker-compose run web python manage.py migrate
 $ docker-compose run web python manage.py createsuperuser
 ```
 
-# Запуск проект с помощью Docker
+# Запуск проекта
 
 Запускаем приложение:
 ```
