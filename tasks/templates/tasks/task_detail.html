@@ -1,0 +1,39 @@
+{% extends 'index.html' %}
+
+{% block html_title %}{{ object }}{% endblock %}
+
+{% block content %}
+    <div>
+    <a href={% url 'task-edit' pk=object.pk %}>Редактировать</a>
+    </div>
+    <hr/>
+
+    <div class="task">
+        <div>Задача #{{ object.id }}</div>
+
+        <div><b>Проект:</b> {{ object.project }}</div>
+
+        <div style="margin: 10px 0">
+            <b>Описание:</b> <br/>
+            {{ object.description }}
+        </div>
+
+        <div style="margin: 10px 0">
+            <div><b>Приоритет:</b> {{ object.get_priority_display }}</div>
+            <div><b>Статус:</b> {{ object.get_status_display }}</div>
+        </div>
+
+        <div style="margin: 10px 0">
+            <div><b>Оценка времени на реализацию:</b> {{ object.time_estimate }}</div>
+            <div><b>Затраченное время на реализацию:</b> {{ object.time_spent }}</div>
+        </div>
+
+        <div style="margin: 10px 0">
+            <div><b>Исполнитель:</b> {{ object.executor }}</div>
+            <div><b>Автор:</b> {{ object.created_by }}</div>
+        </div>
+
+        <div><b>Дата обновления:</b> {{ object.date_updated }}</div>
+        <div><b>Дата создания:</b> {{ object.date_created }}</div>
+    </div>
+{% endblock %}

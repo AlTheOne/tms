@@ -1,0 +1,50 @@
+{% extends 'index.html' %}
+
+{% block html_title %}Список задач{% endblock %}
+
+{% block content %}
+    <form action="{% url 'task-search_result' %}" method="get">
+        <input name="q" type="text" placeholder="Поиск...">
+        <input type="submit" value="Искать">
+    </form>
+    <div class="tasks">
+    {% for object in object_list %}
+        <div class="task">
+            <div>
+                <a href="{% url 'task-detail' pk=object.pk %}">Задача #{{ object.id }}</a> -
+                <a href="{% url 'task-edit' pk=object.pk %}">Редактировать</a>
+            </div>
+
+            <div><b>Проект:</b> {{ object.project }}</div>
+
+            <div style="margin: 10px 0"><b>Краткое описание:</b> <br/>{{ object.description|slice:50 }}</div>
+
+            <div><b>Дата обновления:</b> {{ object.date_updated }}</div>
+            <div><b>Дата создания:</b> {{ object.date_created }}</div>
+
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}
+
+{% block pagination %}
+    {% if is_paginated %}
+    <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; В начало</a>
+            <a href="?page={{ page_obj.previous_page_number }}">Предыдущие</a>
+        {% endif %}
+
+        <span class="current">
+            Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">вперёд</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">В конец &raquo;</a>
+        {% endif %}
+    </span>
+    </div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'index.html' %}
+
+{% block html_title %}Отчёт{% endblock %}
+
+{% block content %}
+    <form method="get">
+        {{ form.as_p }}
+        <input type="submit" value="Сформировать отчёт">
+    </form>
+    <hr/>
+
+    {% if object_list %}
+        Итог затраченного времени: {{ object_list.0.total }}
+    <div class="tasks">
+    {% for object in object_list %}
+        <div class="task">
+            <div>
+                <a href="{% url 'task-detail' pk=object.pk %}">Задача #{{ object.id }}</a> -
+                <a href="{% url 'task-edit' pk=object.pk %}">Редактировать</a>
+            </div>
+
+            <div><b>Проект:</b> {{ object.project }}</div>
+
+            <div style="margin: 10px 0"><b>Краткое описание:</b> <br/>{{ object.description|slice:50 }}</div>
+
+            <div><b>Дата обновления:</b> {{ object.date_updated }}</div>
+            <div><b>Дата создания:</b> {{ object.date_created }}</div>
+
+        </div>
+    {% endfor %}
+    </div>
+    {% else %}
+        Данных нет...
+    {% endif %}
+{% endblock %}
